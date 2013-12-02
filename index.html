@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Go-V8 by idada</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Go-V8</h1>
+        <p>V8 JavaScript engine bindings for Go</p>
+        <p class="view"><a href="https://github.com/idada/go-v8">View the Project on GitHub <small>idada/go-v8</small></a></p>
+        <ul>
+          <li><a href="https://github.com/idada/go-v8/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/idada/go-v8/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/idada/go-v8">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h1>
+
+<ul>
+<li>Thread safe</li>
+<li>Thorough and careful testing</li>
+<li>Boolean, Number, String, Object, Array, Regexp, Function</li>
+<li>Compile and run JavaScript</li>
+<li>Save and load pre-compiled script data</li>
+<li>Create JavaScript context with global object template</li>
+<li>Operate JavaScript object properties and array elements in Go</li>
+<li>Define JavaScript object template in Go with property accessors and interceptors</li>
+<li>Define JavaScript function template in Go</li>
+<li>Catch JavaScript exception in Go</li>
+<li>Throw JavaScript exception by Go</li>
+<li>JSON parse and generate</li>
+</ul><h1>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h1>
+
+<p>For 'curl' user. please run this shell command:</p>
+
+<blockquote>
+<p>curl -O <a href="https://raw.github.com/idada/go-v8/master/get.sh">https://raw.github.com/idada/go-v8/master/get.sh</a> &amp;&amp; chmod +x get.sh &amp;&amp; ./get.sh go-v8</p>
+</blockquote>
+
+<p>For 'wget' user. Please run this shell command:</p>
+
+<blockquote>
+<p>wget -O get.sh <a href="https://raw.github.com/idada/go-v8/master/get.sh">https://raw.github.com/idada/go-v8/master/get.sh</a> &amp;&amp; chmod +x get.sh &amp;&amp; ./get.sh go-v8</p>
+</blockquote>
+
+<p>Note: require Go version 1.2 and Git.</p>
+
+<h1>
+<a name="hello-world" class="anchor" href="#hello-world"><span class="octicon octicon-link"></span></a>Hello World</h1>
+
+<p>This 'Hello World' program shows how to use go-v8 to compile and run JavaScript code then get the result.</p>
+
+<div class="highlight highlight-go"><pre><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">"github.com/idada/go-v8"</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">engine</span> <span class="o">:=</span> <span class="nx">v8</span><span class="p">.</span><span class="nx">NewEngine</span><span class="p">()</span>
+    <span class="nx">script</span> <span class="o">:=</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">Compile</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">"'Hello ' + 'World!'"</span><span class="p">),</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+    <span class="nx">context</span> <span class="o">:=</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">NewContext</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+
+    <span class="nx">context</span><span class="p">.</span><span class="nx">Scope</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">cs</span> <span class="nx">v8</span><span class="p">.</span><span class="nx">ContextScope</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">result</span> <span class="o">:=</span> <span class="nx">script</span><span class="p">.</span><span class="nx">Run</span><span class="p">()</span>
+        <span class="nb">println</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">ToString</span><span class="p">())</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+</pre></div>
+
+<h1>
+<a name="performance-and-stability-" class="anchor" href="#performance-and-stability-"><span class="octicon octicon-link"></span></a>Performance and Stability </h1>
+
+<p>The benchmark result on my iMac:</p>
+
+<pre><code>NewContext     249474 ns/op
+NewInteger        984 ns/op
+NewString         983 ns/op
+NewObject        1036 ns/op
+NewArray0        1130 ns/op
+NewArray5        1314 ns/op
+NewArray20       1666 ns/op
+NewArray100      3124 ns/op
+Compile         11059 ns/op
+PreCompile      11697 ns/op
+RunScript        1085 ns/op
+JsFunction       1114 ns/op
+GoFunction       1630 ns/op
+Getter           2060 ns/op
+Setter           2934 ns/op
+TryCatch        43097 ns/op
+</code></pre>
+
+<p>I write many test and benchmark to make sure go-v8 stable and efficient.</p>
+
+<p>There is a shell script named 'test.sh' in the project. </p>
+
+<p>It can auto configure cgo environment variables and run test.</p>
+
+<p>For example:</p>
+
+<pre><code>./test.sh . .
+</code></pre>
+
+<p>The above command will run all of test and benchmark.</p>
+
+<p>The first argument of test.sh is test name pattern, second argument is benchmark name pattern.</p>
+
+<p>For example:</p>
+
+<pre><code>./test.sh ThreadSafe Array
+</code></pre>
+
+<p>The above command will run all of thread safe test and all of benchmark about Array type.</p>
+
+<h1>
+<a name="concepts" class="anchor" href="#concepts"><span class="octicon octicon-link"></span></a>Concepts</h1>
+
+<h2>
+<a name="engine" class="anchor" href="#engine"><span class="octicon octicon-link"></span></a>Engine</h2>
+
+<p>In go-v8, engine type is the wrapper of v8::Isolate.</p>
+
+<p>Because V8 engine use thread-local storage but cgo calls may be execute in different thread. So go-v8 use v8::Locker to make sure V8 engine's thread-local data initialized. And the locker make go-v8 thread safe.</p>
+
+<p>You can create different engine instance for data isolate or improve efficiency of concurrent purpose.</p>
+
+<div class="highlight highlight-go"><pre><span class="nx">engine1</span> <span class="o">:=</span> <span class="nx">v8</span><span class="p">.</span><span class="nx">NewEngine</span><span class="p">()</span>
+<span class="nx">engine2</span> <span class="o">:=</span> <span class="nx">v8</span><span class="p">.</span><span class="nx">NewEngine</span><span class="p">()</span>
+</pre></div>
+
+<h2>
+<a name="script" class="anchor" href="#script"><span class="octicon octicon-link"></span></a>Script</h2>
+
+<p>When you want to run some JavaScript. You need to compile first.</p>
+
+<p>Scripts can run many times or run in different context.</p>
+
+<div class="highlight highlight-go"><pre><span class="nx">script</span> <span class="o">:=</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">Compile</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">`"Hello " + "World!"`</span><span class="p">),</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+</pre></div>
+
+<p>The Engine.Compile() method take 3 arguments. </p>
+
+<p>The first is the code.</p>
+
+<p>The second is a ScriptOrigin, it stores script's file name or line number offset etc. You can use ScriptOrigin to make error message and stack trace friendly.</p>
+
+<div class="highlight highlight-go"><pre><span class="nx">name</span> <span class="o">:=</span> <span class="s">"my_file.js"</span>
+<span class="nx">real</span> <span class="o">:=</span> <span class="nx">ReadFile</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+<span class="nx">code</span> <span class="o">:=</span> <span class="s">"function(_export){\n"</span> <span class="o">+</span> <span class="nx">realcode</span> <span class="o">+</span> <span class="s">"\n}"</span>
+<span class="nx">origin</span> <span class="o">:=</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">NewScriptOrigin</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+<p>The third is a ScriptData, it's pre-parsing data, as obtained by Engine.PreCompile(). If you want to compile a script many time, you can use ScriptData to speeds compilation. </p>
+
+<div class="highlight highlight-go"><pre><span class="nx">code</span> <span class="o">:=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">`"Hello " + "World!"`</span><span class="p">)</span>
+<span class="nx">data</span> <span class="o">:=</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">PreCompile</span><span class="p">(</span><span class="nx">code</span><span class="p">)</span>
+<span class="nx">script1</span> <span class="o">:=</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">Compile</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
+<span class="nx">script2</span> <span class="o">:=</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">Compile</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
+</pre></div>
+
+<h2>
+<a name="context" class="anchor" href="#context"><span class="octicon octicon-link"></span></a>Context</h2>
+
+<p>The description in V8 embedding guide:</p>
+
+<blockquote>
+<p>In V8, a context is an execution environment that allows separate, unrelated, JavaScript applications to run in a single instance of V8. You must explicitly specify the context in which you want any JavaScript code to be run.</p>
+</blockquote>
+
+<p>In go-v8, you can create many contexts from a V8 engine instance. When you want to run some JavaScript in a context. You need to enter the context by calling Scope() and run the JavaScript in the callback.</p>
+
+<div class="highlight highlight-go"><pre><span class="nx">context</span><span class="p">.</span><span class="nx">Scope</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">cs</span> <span class="nx">v8</span><span class="p">.</span><span class="nx">ContextScope</span><span class="p">){</span>
+    <span class="nx">script</span><span class="p">.</span><span class="nx">Run</span><span class="p">()</span>
+<span class="p">})</span>
+</pre></div>
+
+<p>Context in V8 is necessary. So in go-v8 you can do this:</p>
+
+<div class="highlight highlight-go"><pre><span class="nx">context</span><span class="p">.</span><span class="nx">Scope</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">cs</span> <span class="nx">v8</span><span class="p">.</span><span class="nx">ContextScope</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">context2</span> <span class="o">:=</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">NewContext</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span>
+    <span class="nx">context2</span><span class="p">.</span><span class="nx">Scope</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">cs2</span> <span class="nx">v8</span><span class="p">.</span><span class="nx">ContextScope</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="p">})</span>
+<span class="p">})</span>
+</pre></div>
+
+<p>Please note. Don't take any JavaScript value out scope.</p>
+
+<p>When the outermost Scope() return, all of the JavaScript value created in this scope or nested scope will be destroyed.</p>
+
+<h2>
+<a name="more" class="anchor" href="#more"><span class="octicon octicon-link"></span></a>More</h2>
+
+<p>Please read 'v8_all_test.go' for more information.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/idada">idada</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
