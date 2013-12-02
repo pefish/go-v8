@@ -168,8 +168,9 @@ TryCatch        43097 ns/op
 
 <div class="highlight highlight-go"><pre><span class="nx">name</span> <span class="o">:=</span> <span class="s">"my_file.js"</span>
 <span class="nx">real</span> <span class="o">:=</span> <span class="nx">ReadFile</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
-<span class="nx">code</span> <span class="o">:=</span> <span class="s">"function(_export){\n"</span> <span class="o">+</span> <span class="nx">realcode</span> <span class="o">+</span> <span class="s">"\n}"</span>
+<span class="nx">code</span> <span class="o">:=</span> <span class="s">"function(_export){\n"</span> <span class="o">+</span> <span class="nx">real</span> <span class="o">+</span> <span class="s">"\n}"</span>
 <span class="nx">origin</span> <span class="o">:=</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">NewScriptOrigin</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nx">script</span> <span class="o">:=</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">Compile</span><span class="p">(</span><span class="nx">code</span><span class="p">,</span> <span class="nx">origin</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
 </pre></div>
 
 <p>The third is a ScriptData, it's pre-parsing data, as obtained by Engine.PreCompile(). If you want to compile a script many time, you can use ScriptData to speeds compilation. </p>
