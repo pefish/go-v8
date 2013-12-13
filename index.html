@@ -220,7 +220,7 @@ TryCatch        43097 ns/op
 
 
 </div>
-<div id="cn_content" style="display:none">
+<div id="cn_content">
 
 <h1>
 <a name="%E4%B8%AD%E6%96%87%E4%BB%8B%E7%BB%8D" class="anchor" href="#%E4%B8%AD%E6%96%87%E4%BB%8B%E7%BB%8D"><span class="octicon octicon-link"></span></a>中文介绍</h1>
@@ -416,9 +416,12 @@ TryCatch        43097 ns/op
         <script type="text/javascript">
 var lang = navigator.language || navigator.userLanguage;
 
-if(lang.substr(0, 3) == "zh-") {
+if (lang.substr(0, 3) == "zh-") {
   document.getElementById('en_content').style.display='none';
   document.getElementById('cn_content').style.display='normal';
+} else {
+  document.getElementById('en_content').style.display='normal';
+  document.getElementById('cn_content').style.display='none';
 }
         </script>
           <script type="text/javascript">
