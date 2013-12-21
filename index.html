@@ -27,6 +27,7 @@
         </ul>
       </header>
       <section>
+<div id="en_content">
         <h1>
 <a name="v8go" class="anchor" href="#v8go"><span class="octicon octicon-link"></span></a>v8.go</h1>
 
@@ -85,7 +86,7 @@
     <span class="p">})</span>
 <span class="p">}</span>
 </pre></div>
-
+</div><div id="cn_content">
 <h1>
 <a name="%E4%B8%AD%E6%96%87%E4%BB%8B%E7%BB%8D" class="anchor" href="#%E4%B8%AD%E6%96%87%E4%BB%8B%E7%BB%8D"><span class="octicon octicon-link"></span></a>中文介绍</h1>
 
@@ -145,12 +146,24 @@
     <span class="p">})</span>
 <span class="p">}</span>
 </pre></div>
+</div>
       </section>
     </div>
     <footer>
       <p>Project maintained by <a href="https://github.com/idada">idada</a></p>
       <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
     </footer>
+<script type="text/javascript">
+var lang = navigator.language || navigator.userLanguage;
+
+if (lang.substr(0, 3) == "zh-") {
+  document.getElementById('en_content').style.display='none';
+  document.getElementById('cn_content').style.display='normal';
+} else {
+  document.getElementById('en_content').style.display='normal';
+  document.getElementById('cn_content').style.display='none';
+}
+</script>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
