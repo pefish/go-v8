@@ -27,6 +27,7 @@
         </ul>
       </header>
       <section>
+      <div id="en_content">
         <h1>
 <a name="v8go" class="anchor" href="#v8go"><span class="octicon octicon-link"></span></a>v8.go</h1>
 
@@ -380,7 +381,7 @@ TryCatch        43097 ns/op
 <span class="p">}</span>
 
 </pre></div>
-
+</div><div id="cn_content">
 <h1>
 <a name="%E6%80%A7%E8%83%BD%E5%92%8C%E7%A8%B3%E5%AE%9A%E6%80%A7-" class="anchor" href="#%E6%80%A7%E8%83%BD%E5%92%8C%E7%A8%B3%E5%AE%9A%E6%80%A7-"><span class="octicon octicon-link"></span></a>性能和稳定性 </h1>
 
@@ -481,12 +482,24 @@ TryCatch        43097 ns/op
 <a name="%E6%9B%B4%E5%A4%9A" class="anchor" href="#%E6%9B%B4%E5%A4%9A"><span class="octicon octicon-link"></span></a>更多</h2>
 
 <p>请阅读<code>v8_all_test.go</code>以及<code>samples</code>目录下的示例代码。</p>
+      </div>
       </section>
     </div>
     <footer>
       <p>Project maintained by <a href="https://github.com/idada">idada</a></p>
       <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
     </footer>
+<script type="text/javascript">
+var lang = navigator.language || navigator.userLanguage;
+
+if (lang.substr(0, 3) == "zh-") {
+  document.getElementById('en_content').style.display='none';
+  document.getElementById('cn_content').style.display='normal';
+} else {
+  document.getElementById('en_content').style.display='normal';
+  document.getElementById('cn_content').style.display='none';
+}
+</script>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
