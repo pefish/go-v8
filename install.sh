@@ -9,7 +9,8 @@ cd ..
 outdir="`pwd`/v8/out/native"
 
 libv8_base="`find $outdir -name 'libv8_base.*.a' | head -1`"
-if [ ! -f $libv8_base ]; then
+libv8_snapshot="`find $outdir -name 'libv8_snapshot*.a' | head -1`"
+if [ ! -f $libv8_base ] || [ ! -f $libv8_snapshot ]; then
 	echo >&2 "V8 build failed?"
 	exit
 fi
@@ -31,7 +32,7 @@ echo "Name: v8
 Description: v8 javascript engine
 Version: $v8_version
 Cflags: $libstdcpp -I`pwd` -I`pwd`/v8/include
-Libs: $libstdcpp $libv8_base $outdir/libv8_snapshot.a $librt" > v8.pc
+Libs: $libstdcpp $libv8_base $libv8_snapshot $librt" > v8.pc
 
 # let's go
 go install
