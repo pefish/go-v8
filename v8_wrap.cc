@@ -656,7 +656,7 @@ char* V8_Value_ToString(void* value) {
 	VALUE_SCOPE(value);
 
 	Handle<String> string = local_value->ToString();
-	char* str = (char*)malloc(string->Length() + 1);
+	char* str = (char*)malloc(string->Utf8Length() + 1);
 	string->WriteUtf8(str);
 
 	return str;
@@ -1106,7 +1106,7 @@ char* V8_RegExp_Pattern(void* value) {
 
 	Local<String> pattern = Local<RegExp>::Cast(local_value)->GetSource();
 
-	char* str = (char*)malloc(pattern->Length() + 1);
+	char* str = (char*)malloc(pattern->Utf8Length() + 1);
 	pattern->WriteUtf8(str);
 
 	return str;
@@ -1427,7 +1427,7 @@ void V8_NamedPropertyGetterCallbackBase(
     callback_info.key = NULL;
 
 	if (typ != OTP_Enumerator) {
-		char* key = (char*)malloc(property->Length() + 1);
+		char* key = (char*)malloc(property->Utf8Length() + 1);
 		property->WriteUtf8(key);
 		callback_info.key = key;
 	}

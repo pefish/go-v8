@@ -77,6 +77,10 @@ func Test_Values(t *testing.T) {
 			t.Fatal(`NewString("Hello World!").ToString() != "Hello World!"`)
 		}
 
+		if engine.NewString("Hello Unicode ÅÆØ ĄŚĆ!").ToString() != "Hello Unicode ÅÆØ ĄŚĆ!" {
+			t.Fatal(`NewString("Hello Unicode ÅÆØ ĄŚĆ").ToString() != "Hello Unicode ÅÆØ ĄŚĆ"`)
+		}
+
 		if engine.NewObject().IsObject() == false {
 			t.Fatal(`NewObject().IsObject() == false`)
 		}
