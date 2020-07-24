@@ -1,0 +1,5 @@
+Name: v8
+Description: v8 javascript engine
+Version: 
+Cflags: -I/Users/joy/Work/backend/golang/go-v8 -I/Users/joy/Work/backend/golang/go-v8/v8/include
+Libs: /Users/joy/Work/backend/golang/go-v8/v8/out.gn/x64.release.sample/obj/libv8_monolith.a
